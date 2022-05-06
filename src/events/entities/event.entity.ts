@@ -9,6 +9,7 @@ export class Event extends mongoose.Document {
     @Prop({ index: true })
     name: string;
 
+    // THIS IS CAUSING ERROR. WHY? comment out for now
     @Prop(mongoose.SchemaTypes.Mixed)
     payload: Record<string, any>;
 }
