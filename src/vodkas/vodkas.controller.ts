@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CreateVodkaDto } from './dto/create-vodka.dto';
 import { UpdateVodkaDto } from './dto/update-vodka.dto';
 import { VodkasService } from './vodkas.service';
@@ -9,18 +10,16 @@ export class VodkasController {
     constructor(private readonly vodkaService: VodkasService) { }
 
     @Get()
-    findAll(@Query() paginationQuery) {
+    findAll(@Query() paginationQuery: PaginationQueryDto) {
         // const { limit, offset } = paginationQuery;
-        return this.vodkaService.findAll();
+        return this.vodkaService.findAll(paginationQuery);
     }
 
     // @Param decorator is used to get the parameter from the url/
     // id passed to param lets access the id from the url
     @Get(':id')
-    findOne(@Param('id') id: number) {
-        // console.log(typeof id)
-        // maybe change param input back to pure string or number
-        return this.vodkaService.findOne('' + id);
+    findOne(@Param('id') id: string) {
+        return this.vodkaService.findOne(id);
     }
 
     @Post()
